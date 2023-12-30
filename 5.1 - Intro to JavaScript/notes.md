@@ -119,9 +119,3 @@ function scoping() {
 ```
 
 Variables declared with `let` are only available within the scope they are declared within. Trying to reference them outside of their brackets wil result in an error. However, `var` variables will be available outside the scope.
-
-## TypeScript
-
-We touched on it a little, but data can take all sorts of shapes, whether they're primitive data types, objects, or user defined types. In JavaScript, your code doens't know what type of data it will be working with or its type. So, errors are found in runtime or production.
-
-TypeScript solves most of these types of issues. TypeScript is essentially just JavaScript, but with types, and it transpiles (similar to compiles) down to JavaScript, which is then executed.
