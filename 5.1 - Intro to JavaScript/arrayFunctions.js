@@ -16,7 +16,7 @@ names.forEach((name) => {
 // Example using filter
 const ages = [18, 25, 30, 15, 40];
 
-const adults = ages.filter((age) => age >= 18);
+const adults = ages.filter((age) => age >= 20);
 console.log(adults);
 
 //Example using spread operator

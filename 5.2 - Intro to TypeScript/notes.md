@@ -1,14 +1,40 @@
-## TypeScript
+# Node, npm, and TypeScript
 
-We touched on it a little, but data can take all sorts of shapes, whether they're primitive data types, objects, or user defined types. In JavaScript, your code doens't know what type of data it will be working with or its type. So, errors are found in runtime or production.
+## Getting Started
 
-TypeScript solves most of these types of issues. TypeScript is essentially just JavaScript, but with types, and it transpiles (similar to compiles) down to JavaScript, which is then executed. It catches the errors at compile time. In fact, your IDE will show an error if there's a type mismatch, even before compile time.
+First, we need to install Node and npm, node package manager. This allows you to add external libraries, packages, modules, etc., including TypeScript. We'll be using nvm, node version manager, to install both node and npm.
 
-Also, when code bases become more complex, and you're working with tons of types, it makes it far easier to write and read code, especially when you're looking at code others have written.
+If you already have Node or NPM on your machine, you're probably good. You can chekc by typing
+`node -v`
+and
+`npm -v`
+in your terminal.
 
-You get autocomplete and great tooling in your IDE, which drastically cuts down on the tedious parts of development and makes it far easier to avoid bugs.
+[Go here to follow the instructions for your OS.](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 
-The downside? Sometimes you get types that look like this - from a project I'm working on right now.
+[Mac/Linux users follow this](https://github.com/nvm-sh/nvm)
+
+[Windows users follow this](https://github.com/coreybutler/nvm-windows)
+
+[Video for Windows users](https://www.youtube.com/watch?v=gDJcEt7pPv8)
+
+[Video for Mac users](https://www.youtube.com/watch?v=BhLFxy6Jz8c)
+
+### Installing TS
+
+Once you have npm set up, you can install TS globally with the following command.
+
+`npm install -g typescript`
+
+You should also install ts-node globally
+
+`npm install -g ts-node`
+
+# TypeScript
+
+Pros: Strict typing, autocomplete, IDE support, optional chaining, and the main one - bugs get caught before compile time, not at runtime or in production.
+
+Cons: Sometimes it can be hard to figure out to right type for a very complicated type or interface. We'll go over some tricks. Here's an example of a particularly nasty one that came up in a current project of mine.
 
 ```
 export type MessageNavProps<T extends keyof RootStackParamList> = {
@@ -17,6 +43,16 @@ export type MessageNavProps<T extends keyof RootStackParamList> = {
 };
 ```
 
-We'll talk about how to either actually learn how to get the right typing here (there are tricks, you don't have to actually _know_ the right type, just how to figure it out) or how to avoid things getting this complicated to begin with. You also don't actually need to have strict types for everything - we're going to talk about tweaking the `tsconfig.json` file for your preferences.
-
 ## Getting Started
+
+To set up a TS project, at the most basic level, navigate to the root of your directory in your terminal and type
+
+`tsc --init`
+
+This will set up the options for the TS compiler and create a `tsconfig.json` file, which you can edit to your preferences. I've included one I usually use in this lesson, which is pretty strict. You can mouse over any of the keys, in the json file, to see what they do.
+
+It is important to include
+
+`"outDir": "./dist",`
+
+This means that all of your compiled TS will generate JS files in a /dist folder,
