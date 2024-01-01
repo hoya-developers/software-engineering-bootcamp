@@ -32,9 +32,9 @@ You should also install ts-node globally
 
 # TypeScript
 
-Pros: Strict typing, autocomplete, IDE support, optional chaining, and the main one - bugs get caught before compile time, not at runtime or in production.
+Pros: Strict typing, autocomplete, IDE support, optional chaining, and the main one - bugs get caught before compile time, not at runtime or in production. Also makes it far easier to write complex code with lots of pieces.
 
-Cons: Sometimes it can be hard to figure out to right type for a very complicated type or interface. We'll go over some tricks. Here's an example of a particularly nasty one that came up in a current project of mine.
+Cons: Sometimes it can be hard to figure out to right type for a very complicated type or interface. We'll go over some tricks. Here's an example of a particularly nasty looking one that came up in a current project of mine.
 
 ```
 export type MessageNavProps<T extends keyof RootStackParamList> = {
@@ -55,4 +55,95 @@ It is important to include
 
 `"outDir": "./dist",`
 
-This means that all of your compiled TS will generate JS files in a /dist folder,
+This means that all of your compiled TS will generate JS files in a /dist folder. This should be added to your .gitignore file
+
+If you want to compile the TS into JS, make sure you're in the same location as your `tsconfig.json` file and simplly type `tsc` in the terminal. This will produce new compiled JS files.
+
+### Tips and Tricks
+
+If you open an additional terminal, you can type
+
+`tsc --watch`
+
+which will recompile your files every time you save, and also alert you if there are any errors in your project. I usually leave this running I code.
+
+## package.json Scripts
+
+In your `package.json` file, you can add custom scripts which are very useful while you're developing your app. Here's a good boilerplate to have
+
+```
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "test": "jest",
+    "start": "node dist/index.js",
+    "start2": "ts-node src/index.ts",
+    "dev": "nodemon dist/index.js"
+  }
+```
+
+To run, say, the `dev` script you would simply type
+
+`npm run dev`
+
+I usually have both a `watch` and `dev` scripts running in different terminals.
+
+`test` is used for automated testing and is beyond the scope of this course, but you can use a library called Jest to implement automated testing for your JS/TS project, which can be incredibly useful in CI/CD pipelines and save you huge amounts of dev time in the long run
+
+`start` uses a node server and the `index.js` file as the entry point
+
+`start2` uses ts-node and the `index.ts` file as an entry point
+
+`dev` uses a package called `nodemon` which allows you, if you're observing a local webpage on, say, localhost:3000, to edit your code in VS Code and the webpage will automatically update itself. Huge timesaver.
+
+## Types
+
+TypeScript allows you to declare types and interfaces for data. Here's some basic examples.
+
+`const myName: string = "Alice";`
+
+`const myAge: number = 48;`
+
+The only numeric type in TS is `number`. No ints, longs, shorts, size_t's, etc.
+
+Here's how to write a simple adder function
+
+```
+const add = (a: number, b: number) : number => a + b;
+```
+
+You've seen generic types in C styled languages. Here's what generics look like in TS - this function will add numbers, strings...anything that has a defined + operation.
+
+```
+const add = <T>(a: T, b: T): T => {
+  return a + b;
+};
+```
+
+---
+
+### Defining Types
+
+You'll constantly be defining your own types for different data which you need to pass around. Let's look at what a user type might look like.
+
+```
+type User = {
+  id: number;
+  username: string;
+  email: string;
+  isActive: boolean;
+  hobbies: string[];
+};
+```
+
+Declaring a User might look like this
+
+```
+const newUser: User = {
+  id: 1,
+  username: "john_doe",
+  email: "john@example.com",
+  isActive: true,
+  hobbies: ["reading", "coding", "traveling"],
+};
+```

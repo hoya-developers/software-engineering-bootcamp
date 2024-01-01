@@ -138,6 +138,12 @@ function interpolate(username) {
 }
 ```
 
+---
+
+### NaN
+
+NaN stands for "not a number", and you'll see it show up if you do something funky, or maybe do an operation on something which has to be numeric, but isn't.
+
 ## ES6
 
 ES 6 added a bunch of new features to JS which pop up everywhere. [Here's a link to some of them.](https://www.w3schools.com/js/js_es6.asp)
@@ -239,7 +245,7 @@ const drinkers = ages.filter((age) => age >= 21);
 
 ## JSON and JavaScript objects
 
-JS objects are incredibly easy to work with. Here's an example of what they look like. These are simple key-value pairs for each field.
+JS objects are incredibly easy to work with. They are always enclosed with `{}`. Here's an example of what they look like. These are simple key-value pairs for each field. A key is mapped to either value which can be a primitive type, an array, or an object. These can be nested arbitrarily deeply.
 
 ```
 let person = {
@@ -249,7 +255,7 @@ let person = {
   address: {
     city: "Example City",
     country: "Example Country",
-  },
+  }, //address is an object also
   hobbies: ["reading", "coding", "traveling"],
 };
 ```
@@ -264,4 +270,141 @@ person.hobbies[0] = "cooking";
 
 Here's an example
 
-You'll often see this notation in JSON files. You'll have a bunch of JSOn files like `package.json`, `settings.json`, `tsconfig.json`, etc. Often these files have important build settings
+You'll often see this notation in JSON files. You'll have a bunch of JSON files like `package.json`, `settings.json`, `tsconfig.json`, etc. Often these files have important build settings
+
+---
+
+### Object Destructuring
+
+Values from objects can be extracted from the object and used as variables. Here's a simple example. This is incredibly useful.
+
+```
+const person = {
+  firstName: "John",
+  lastName: "Doe",
+  age: 30,
+  address: {
+    city: "Example City",
+    country: "Example Country",
+  },
+};
+
+const { firstName, lastName, age, address: { city, country } } = person;
+
+console.log("First Name:", firstName);
+console.log("Last Name:", lastName);
+console.log("Age:", age);
+console.log("City:", city);
+console.log("Country:", country);
+```
+
+### Spread Operator
+
+The spread operator in JS looks like `...`
+
+This can be used on both arrays and objects in order to create a new object or array, but add some new values. Remember, arrays are immutable, so you usually just create a new one. Here's an example.
+
+```
+const numbers = [1, 2, 3];
+const newNumbers = [...numbers, 4, 5];
+// newNumbers is [1,2,3,4,5]
+```
+
+It essentially _spreads_ the array into the new array, but also adds the new things you put in it. This also works for objects.
+
+```
+const person = {
+  firstName: "John",
+  lastName: "Doe",
+};
+const newPerson = {...person, age: 40}
+newPerson is {
+  firstName: "John",
+  lastName: "Doe",
+  age: 40
+}
+```
+
+## Asynchronous functions, async/await, Promises, .then()
+
+Waiting for an action to occur, then proceeding with the code, is incredibly common when you're doing things like fetching data from a database, which takes time. There are a few different ways that this can be handled in JS.
+
+### async/await
+
+Here's an example of the async/await syntax. Functions are declared as `async` functions, and anything inside them which takes time to resolve is preceded by the `await` keyword. You will often wrap these in try/catch blocks.
+
+As fetching data from a database takes some time, that function must be awaited.
+
+```
+const fetchDataAsync = async () => {
+  try {
+    const data = await fetchDataFromDatabase(); //this is asynchronous, takes time
+    console.log("Data fetched:", data);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+```
+
+---
+
+## Promises
+
+Promises are a bit tricker. A Promise is an object which is the representation of an asynchronous operation and represents its current state. Typically, they're used to avoid chaining a bunch of callback functions within each other.
+
+Promises can be pending (not yet completed), fullfilled (worked fine), or rejected (something went wrong).
+
+Here's a basic example of a promise.
+
+```
+const myPromise = new Promise((resolve, reject) => {
+  // Asynchronous operation (e.g., fetching data, reading a file)
+  setTimeout(() => {
+    const success = true;
+
+    if (success) {
+      resolve("Operation successful!"); // Fulfill the promise with a value
+    } else {
+      reject("Operation failed!"); // Reject the promise with a reason
+    }
+  }, 1000);
+});
+```
+
+Once we have the promise, here's how you can work with it.
+
+The `.then()` is executed if the promise is fulfilled, and `.catch()` executes when the promise is rejected.
+
+```
+myPromise
+  .then((result) => {
+    console.log("Fulfilled:", result);
+  })
+  .catch((error) => {
+    console.error("Rejected:", error);
+  });
+```
+
+async functions can return promises. Here's an example which ties together most of the stuff in this lesson.
+
+```
+  const getNotifications = async ({ req }) => {
+    const data = await Notification.find({
+      where: { creatorId: req.session.userId },
+      order: { id: "DESC" },
+    });
+    return data;
+  }
+```
+
+This function returns a promise, either containing an array of notifications, or it is undefined. TypeScript will help with this later.
+
+It takes an argument of an object, destructed into simply `req`.
+
+It declares a constant, called data, which is the return value of an awaited function which queries a database.
+
+The `.find()` function takes an object, which has a key `where` with the value being an object, with the `creatorID` key being `req.sessoin.userId`. It then orders the array of notifications in descending order.
+
+It then returns data, which came in an async function, so it is returned as a promise.
+
+This is production code which queries a database, using a userId, and gets their notifications for them.
