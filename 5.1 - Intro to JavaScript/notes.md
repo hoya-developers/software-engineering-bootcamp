@@ -140,6 +140,23 @@ function interpolate(username) {
 
 ---
 
+### Ternary Operator
+
+This will come up all the time in React. It's in C++, but I've found that professors get mad at you if you use it.
+
+```
+const num1 = 1;
+const num2 = 2;
+
+const resultString = num1 < num2 ? "Num 1 is less" : "Num 2 is more";
+```
+
+Basically, if the expression before the question mark evaulates to true, the left expression is assigned the the string. Else, the right expression is assigned.
+
+It's just a concise if-else statement but this will dramatically improve readability when you're doing React stuff.
+
+---
+
 ### NaN
 
 NaN stands for "not a number", and you'll see it show up if you do something funky, or maybe do an operation on something which has to be numeric, but isn't.
@@ -399,11 +416,11 @@ async functions can return promises. Here's an example which ties together most 
 
 This function returns a promise, either containing an array of notifications, or it is undefined. TypeScript will help with this later.
 
-It takes an argument of an object, destructed into simply `req`.
+It takes an argument of an object, destructed into simply `req`. In this case, this is a request - we'll deal with this later when we cover express.
 
 It declares a constant, called data, which is the return value of an awaited function which queries a database.
 
-The `.find()` function takes an object, which has a key `where` with the value being an object, with the `creatorID` key being `req.sessoin.userId`. It then orders the array of notifications in descending order.
+The `.find()` function takes an object, which has a key `where` with the value being an object, with the `creatorID` key being `req.session.userId`. It then orders the array of notifications in descending order.
 
 It then returns data, which came in an async function, so it is returned as a promise.
 
