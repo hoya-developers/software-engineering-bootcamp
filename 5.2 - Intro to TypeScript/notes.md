@@ -259,7 +259,7 @@ TypeScript will complain if you do not include null here. TS will also yell at y
 
 As a rule, you should avoid using this wherever possible, because it defeats the point of TS. My `tsconfig.json` is set to yell at me any time I use it, because it is not type safe.
 
-However, there are some rare scenarios where it can be appropriate. If you are dealing with a module which does not have defined @types/foo which you can import, you can either spend your own time making the types (costly) or just use any. Any legacy JS code may require an `any` in the interest of saving time.
+However, there are some extremely rare scenarios where it can be appropriate. If you are dealing with a module which does not have defined @types/foo which you can import, you can either spend your own time making the types (costly) or just use `unknown`. Any legacy JS code may require an `unknown` in the interest of saving time. There are niche, edge cases where `any` may be needed instead of unknown.
 
 You can also use it to avoid extremely nasty types.
 
@@ -267,7 +267,9 @@ You can also use it to avoid extremely nasty types.
   [K in keyof T]: T[K] extends object ? NestedObject<T[K]> : T[K];
 };`
 
-This is just ugly and no one wants to deal wtih it. If you really need to, you can just say `as any` every time this comes up.
+This is just ugly and no one wants to deal with it. If you really need to, you can just say `as unknown` every time this comes up, but again, there are insane edge cases where `as any` works but `unknown` won't.
+
+Google's style guide forbids you from ever using `any` while writing TS.
 
 ---
 
@@ -381,3 +383,26 @@ There aren't a huge amount of tricks to learning how to deal wtih them other tha
 First, read the last line of the error. The above ones are usually not super meaningful - the last line typically has the exact type that the compiler is looking for.
 
 Also, command clicking on a type brings you to exactly where that type was defined, even if it was not defined by you. You can look at the object, type, interface, etc.
+
+### Exporting
+
+Sometimes you need to export a specific function, type, or variable.
+
+`export const dataSource = newDataSource({
+    ...etc
+})`
+
+```
+export type Context = {
+  req: Request & { session?: Session & { userId?: number } };
+  res: Response;
+  redis: Redis;
+};
+```
+
+But sometimes you want to export the module as default. You'd do
+
+```
+const myDefaultExport = "Hello world!"
+export default myDefaultExport;
+```
