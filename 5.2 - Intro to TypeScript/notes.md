@@ -383,3 +383,26 @@ There aren't a huge amount of tricks to learning how to deal wtih them other tha
 First, read the last line of the error. The above ones are usually not super meaningful - the last line typically has the exact type that the compiler is looking for.
 
 Also, command clicking on a type brings you to exactly where that type was defined, even if it was not defined by you. You can look at the object, type, interface, etc.
+
+### Exporting
+
+Sometimes you need to export a specific function, type, or variable.
+
+`export const dataSource = newDataSource({
+    ...etc
+})`
+
+```
+export type Context = {
+  req: Request & { session?: Session & { userId?: number } };
+  res: Response;
+  redis: Redis;
+};
+```
+
+But sometimes you want to export the module as default. You'd do
+
+```
+const myDefaultExport = "Hello world!"
+export default myDefaultExport;
+```

@@ -153,6 +153,24 @@ app.delete("/:id", (req: Request, res: Response) => {
 });
 ```
 
+To serve static files, use the following syntax. Here's an example of a folder structure where you can serve src/public/...
+
+![](fileStructure.png)
+
+```
+// Serving static files at localhost:3000/images/devs.jpg
+app.use(express.static(path.join(__dirname, "../src/public")));
+```
+
+Finally, make sure the express app is listening on a certain port
+
+```
+const port = 3000;
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
+```
+
 ### curl and Postman
 
 Aside from the browser, the 2 main ways to check if your API is working are by using curl and Postman.
@@ -165,6 +183,143 @@ curl is a bash command which stands for client URL, and allows you to test data 
 
 [Here's a curl overview.](https://www.hostinger.com/tutorials/curl-command-with-examples-linux/)
 
+### Response codes
+
+You've seen theres before.
+
+```
+res.status(200) // Ok
+res.status(201) // Created
+res.status(204) // No content
+res.status(400) // Bad request
+res.status(401) // Unauthorized
+res.status(403) // Forbidden
+res.status(404) // Not found
+res.status(500) // Server error
+```
+
+In general, 200s are good, 300s are weird errors, 400s are client errors, 500s are server errors.
+
+### Middleware
+
+Middleware runs in between the request and the express server. You can write your own, or use any preexisting packages. Here's a simple example of some logging middleware which writes to console. Ideally, you'd have this set up logging to a database to store all requests.
+
+```
+export const logger = (req: Request, _: Response, next: NextFunction) => {
+  req.body.requestTime = Date.now();
+  console.log("url: ", req.url);
+  console.log("params: ", req.params);
+  console.log("query: ", req.query);
+  console.log("body: ", req.body);
+  next();
+};
+```
+
+To add this to your express server, just write
+
+`app.use(logger)`
+
+#### Common uses and packages
+
+Body parser is a package which processes incoming request bodies, which makes PUT and POST requests easier to handle. I think this is built in for recent express versions.
+
+![](middleware.png)
+
+Cookie-parser parses cookies. This can be crucial for authentication, data mining, etc.
+
+Morgan logs http requests, making it simple so you don't have to.
+
+CORS - This is a bit beyond the scope of the course, but CORS stands for cross-origin resource sharing and if you have your backend set up on a different port than your frontend, you'll probably need to use this middleware.
+
+```
+  app.use(
+    cors({
+      origin: process.env.CORS_ORIGIN,
+      credentials: true,
+    })
+  );
+```
+
+connect-redis - Redis is a key/value database that's blazing fast. It's often used for caching user information, including login credentials.
+
+```
+  const RedisStore = connectRedis(session);
+
+  const redis: unknown = new Redis({ host: "redis", port: 6379 });
+  // const redis: unknown = new Redis(process.env.REDIS_URL);
+  // redis.connect().catch(console.error)
+
+  //set proxy for nginx
+  app.set("proxy", 1);
+
+  app.set("trust proxy", true);
+  app.use(
+    session({
+      name: COOKIENAME,
+      store: new RedisStore({
+        client: redis,
+        disableTouch: true, //optional arg, touching increases the time session will be active
+      }),
+      cookie: {
+        maxAge: 1000 * 60 * 60 * 60 * 364 * 10, //10 year cookie time
+        httpOnly: true, //javascript code in front end cannot access cookie
+        secure: __prod__, //cookie only works in https if true.
+        sameSite: "lax", //must be changed to lax for prod
+        domain: __prod__ ? ".yourdomainname.com" : undefined,
+      },
+      saveUninitialized: false,
+      secret: process.env.SESSION_SECRET,
+      resave: false,
+    })
+  );
+
+```
+
 ### Controllers
 
 We're going to go into more detail when we talk about databases and how to modify them. For now, we're going to use some mocked up data to show examples, using res.json(). In the real world. you will be making requests to a database.
+
+Here's an example of a POST request, with the url and data you would need to curl it
+
+`curl -X POST -H "Content-Type: application/json" -d '{"name": "newName", "price": 9999}' http://localhost:3000/api/products
+`
+
+```
+app.post("/api/products", (req, res) => {
+  const newProduct = {
+    id: products.length + 1,
+    name: req.body.name,
+    price: req.body.price,
+  };
+  products.push(newProduct);
+  res.status(201).json(newProduct);
+});
+```
+
+Here's an example of a PUT request.
+
+`// curl -X POST -H "Content-Type: application/json" -d '{"id": 5, "name": "computer",  "price": 1232345}' http://localhost:3000/api/products
+`
+
+```
+app.put("/api/products/:id", (req: Request, res: Response) => {
+  const id = Number(req.params.id);
+  console.log("id: ", id);
+  const index = products.findIndex((product) => product.id === id);
+  console.log("index: ", index);
+  if (index === -1) {
+    return res.status(404).send("Product not found");
+  }
+  const updatedProduct = {
+    id: products[index].id,
+    name: req.body.name,
+    price: req.body.price,
+  };
+  products[index] = updatedProduct;
+  return res.status(200).json(updatedProduct);
+});
+```
+
+But we can separate these. If we define a controller (the logic) in a controllers folder, and the routes for a specific endpoint in another folder, we can make the entire project far more readable, maintainable, and scalable.
+
+[<span style="font-size:3em;">Here's a repo with a basic outline for an Express CRUD API.</span>](https://github.com/colingraydon/express-test)
