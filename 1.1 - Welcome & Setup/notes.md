@@ -2,6 +2,8 @@
 
 #### [Class Slides](https://docs.google.com/presentation/d/1HCBeQF7Kw5zsF8hmfK33ozCBcD6eRRwt-ggqvrofvsg/edit?usp=sharing)
 
+#### [Class Recording](https://youtu.be/q8ldo9vRV6w)
+
 ### Course Overview
 
 #### About the Program
@@ -78,6 +80,7 @@ VSCode is the most popular text editor used for a wide variety of development pr
 - **Live Server** launches a preview server of the current folder you are working in. It is very helpful when working on static websites and you want to see your changes updated live in the browser without refreshing.
 - **Github Copilot** is an AI pair-programmer that will generate suggestions for what to type. It is _extremely_ powerful and will be incredibly helpful throughout this course.
 - **Material Theme** (Optional) VSCode allows you to customize your IDE editor. For this course, we'll use the Material Theme, but feel free to explore and pick whichever theme suits you best.
+- **NPM Intellisense** Helps to autosuggest javascript imports (will be useful when we get to the Javascript portion of the course)
 
 ### Setup NodeJS
 
