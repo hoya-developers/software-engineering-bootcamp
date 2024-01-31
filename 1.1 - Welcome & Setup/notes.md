@@ -2,6 +2,8 @@
 
 #### [Class Slides](https://docs.google.com/presentation/d/1HCBeQF7Kw5zsF8hmfK33ozCBcD6eRRwt-ggqvrofvsg/edit?usp=sharing)
 
+#### [Class Recording](https://youtu.be/q8ldo9vRV6w)
+
 ### Course Overview
 
 #### About the Program
@@ -13,7 +15,9 @@ We’ve designed the course to start from the **beginner level**, assuming no pr
 
 #### Course Logistics
 
-_TODO_
+Classes will be held on Tuesdays and Wednesdays from 5-6PM. Tuesday classes are held in ICC 103, Wednesday classes will be held in Healy 104.
+
+All classes will be recorded and posted to Youtube for those who are unable to attend due to class conflicts.
 
 ### Git & GitHub Setup
 
@@ -76,5 +80,21 @@ VSCode is the most popular text editor used for a wide variety of development pr
 - **Live Server** launches a preview server of the current folder you are working in. It is very helpful when working on static websites and you want to see your changes updated live in the browser without refreshing.
 - **Github Copilot** is an AI pair-programmer that will generate suggestions for what to type. It is _extremely_ powerful and will be incredibly helpful throughout this course.
 - **Material Theme** (Optional) VSCode allows you to customize your IDE editor. For this course, we'll use the Material Theme, but feel free to explore and pick whichever theme suits you best.
+- **NPM Intellisense** Helps to autosuggest javascript imports (will be useful when we get to the Javascript portion of the course)
+
+### Setup NodeJS
+
+#### What is NodeJS?
+
+Node is a Javascript runtime environment that allows us to write and compile javascript outside of a browser - like on a server! In fact, its built on the same V8 engine that Chrome uses.
+
+We'll make extensive use of Node throughout the course, both in compiling React apps as well as writing our own mini back-end in Node.
+
+#### Installing Node
+
+1. For Mac & Windows users, [click here](https://nodejs.org/en/download) to be redirected to the official Node installer. Download the LTS version for your operating system.
+2. Follow the default installation instructions given by the installation prompt.
+
+After following the installation guide, run `node -v` to confirm you've properly installed Node.
 
 ### Additional Links & Resources
