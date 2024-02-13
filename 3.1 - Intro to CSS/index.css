@@ -1,0 +1,60 @@
+* {
+  font-family: "Manrope";
+  margin: 0;
+  padding: 0;
+}
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20vh;
+}
+
+#logo {
+  width: 100px;
+  margin-bottom: 10px;
+}
+.content h4 {
+  font-weight: 300;
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 20px;
+}
+
+select {
+  width: 400px;
+  height: 60px;
+  padding-left: 20px;
+  border-radius: 3px;
+  margin-right: 10px;
+}
+
+.content a {
+  text-decoration: none;
+  background-color: #333;
+  color: white;
+  height: 60px;
+  padding-left: 20px;
+  border-radius: 3px;
+  padding-right: 10px;
+  display: flex;
+  align-items: center;
+}
+.content a p {
+  margin-right: 30px;
+}
+
+#bg-world {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  z-index: -1;
+}
