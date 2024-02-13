@@ -1,0 +1,17 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.item {
+  background-color: lightblue;
+  padding: 10px;
+  margin: 10px;
+}
+.item-2 {
+  background-color: lightgreen;
+  padding: 10px;
+  margin: 10px;
+}
+.container {
+  background-color: lavender;
+}
