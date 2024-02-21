@@ -198,3 +198,42 @@
 .taken {
   background-color: #dddddd;
 }
+
+@media (max-width: 1000px) {
+  .content {
+    background-color: green;
+  }
+  .main-container {
+    flex-direction: column;
+  }
+  .left,
+  .right {
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .right {
+    margin-top: 100px;
+    max-width: 500px;
+  }
+
+  .left-top {
+    margin-top: 50px;
+  }
+  .left-top h6 {
+    text-align: center;
+  }
+  .left-top-route {
+    justify-content: center;
+  }
+  .navbar {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .content {
+    background: orange;
+  }
+}
+ 
