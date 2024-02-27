@@ -161,6 +161,42 @@ It's just a concise if-else statement but this will dramatically improve readabi
 
 NaN stands for "not a number", and you'll see it show up if you do something funky, or maybe do an operation on something which has to be numeric, but isn't.
 
+### Classes
+
+```
+class Example {
+  constructor(name) {
+    this.name = name;
+  }
+
+  normalMethod() {
+    console.log("Hello, ${this.name}!");
+  }
+
+}
+
+const obj = new Example("John");
+```
+
+### This keyword
+
+The `this` keyword is a bit tricky in JS. It refers to the object which is executing the current function. It also behaves differently in arrow functions, which we'll cover later.
+
+```
+console.log(this); //prints the window object
+```
+
+It behaves differently in an object, and refers to the object itself.
+
+```
+const obj = {
+  name: "John",
+  printName: function() {
+    console.log(this.name);
+  }
+}
+```
+
 ## ES6
 
 ES 6 added a bunch of new features to JS which pop up everywhere. [Here's a link to some of them.](https://www.w3schools.com/js/js_es6.asp)
@@ -175,14 +211,31 @@ They also have a different meaning of the `this` keyword than the old-style func
 
 However, if you use an arrow function, there's no `this` variable automatically created, and it just refers to the `this` of the outer scope.
 
+```
+const obj = {
+  name: "Object",
+  regularFunction: function() {
+    console.log(this.name); // this refers to obj
+  },
+  arrowFunction: () => {
+    console.log(this.name); // this refers to the outer context (could be global object or undefined)
+  }
+};
+
+obj.regularFunction(); // Output: Object
+obj.arrowFunction();   // Output: undefined
+```
+
 [Here's some material if you want to read more about it.](https://www.freecodecamp.org/news/the-difference-between-arrow-functions-and-normal-functions/)
 
 Here's an example of a basic arrow function.
 
 ```
+
 const firstArrowFunction = (a, b) => {
-    return a + b;
+return a + b;
 }
+
 ```
 
 They are declared with the `const` keyword. `firstArrowFunction` is the name of the function, and `a, b` are the parameters. The arrow points to the body of the function, then there are the enclosing brackets.
@@ -190,7 +243,9 @@ They are declared with the `const` keyword. `firstArrowFunction` is the name of 
 The above function could also be wrtten like this
 
 ```
+
 const secondArrowFunction = (a, b) => a + b;
+
 ```
 
 These functions are identical. Current best practices dictate that you should be using arrow functions.
@@ -200,7 +255,9 @@ These functions are identical. Current best practices dictate that you should be
 A callback function waits for some event to happen, then is executed. Here's an example of one that waits for a button to be pressed.
 
 ```
+
 <button onClick={() => console.log("hello world!")}>hi guys</button>
+
 ```
 
 The syntax takes a while to get used to. This is an anonymous function, which takes no parameters, which is executed when the button is clicked. Typically, callback functions are used in asynchronous functions or for event handling, which is the case here.
@@ -208,12 +265,14 @@ The syntax takes a while to get used to. This is an anonymous function, which ta
 Here's an example of an arrow function, `delayedMessage`, which utilizes an anonymous callback function.
 
 ```
+
 //after a waiting the amount of time specified by delay , this will print message to console
 const delayedMessage = (message, delay) => {
-  setTimeout(() => {
-    console.log(message);
-  }, delay);
+setTimeout(() => {
+console.log(message);
+}, delay);
 }
+
 ```
 
 This function will wait for the amount of time specified by the `delay` argument and then print the `message` argument to the console. `setTimeout` is a JS built in function which takes both a callback function, then the delay as its argument.
@@ -227,10 +286,12 @@ JS has a bunch of built in array functions which are incredibly useful and you'l
 Here's the `map()` method, which takes an array and returns another array, after using the anonymous function argument which is provided. Here, every element of the `numbers` array is referred to as `num`, and `doubledNumbers` has each corresponding element just be double the element of `numbers`
 
 ```
+
 const numbers = [1, 2, 3, 4, 5];
 
-const doubledNumbers = numbers.map((num) => num * 2);
+const doubledNumbers = numbers.map((num) => num \* 2);
 //doubledNumbers is [2, 4, 6, 8 10];
+
 ```
 
 ---
@@ -240,12 +301,14 @@ const doubledNumbers = numbers.map((num) => num * 2);
 The `forEach()` method iterates through an array and does something, which you define, for every element. Here, it is taking each name in the array, creating a variable using a string literal, then printing that variable to console
 
 ```
+
 const names = ["Alice", "Bob", "Charlie"];
 
 names.forEach((name) => {
-  const stringLiteral = `Hello, ${name}!`;
-  console.log(stringLiteral);
+const stringLiteral = `Hello, ${name}!`;
+console.log(stringLiteral);
 });
+
 ```
 
 ---
@@ -255,9 +318,11 @@ names.forEach((name) => {
 The `filter()` method will filter an array and return a new array, only keeping elements which meet the criteria. Here, we only keep any ages 21 or over.
 
 ```
+
 const adults = [18, 25, 30, 20, 40];
 const drinkers = ages.filter((age) => age >= 21);
 // drinkers is [25, 30, 40]
+
 ```
 
 ## JSON and JavaScript objects
@@ -265,24 +330,28 @@ const drinkers = ages.filter((age) => age >= 21);
 JS objects are incredibly easy to work with. They are always enclosed with `{}`. Here's an example of what they look like. These are simple key-value pairs for each field. A key is mapped to either value which can be a primitive type, an array, or an object. These can be nested arbitrarily deeply.
 
 ```
+
 let person = {
-  firstName: "John",
-  lastName: "Doe",
-  age: 30,
-  address: {
-    city: "Example City",
-    country: "Example Country",
-  }, //address is an object also
-  hobbies: ["reading", "coding", "traveling"],
+firstName: "John",
+lastName: "Doe",
+age: 30,
+address: {
+city: "Example City",
+country: "Example Country",
+}, //address is an object also
+hobbies: ["reading", "coding", "traveling"],
 };
+
 ```
 
 Fields are are simply accessed and modified like this.
 
 ```
+
 console.log(person.address.city);
 person.address.city = "New City";
 person.hobbies[0] = "cooking";
+
 ```
 
 Here's an example
@@ -296,14 +365,15 @@ You'll often see this notation in JSON files. You'll have a bunch of JSON files 
 Values from objects can be extracted from the object and used as variables. Here's a simple example. This is incredibly useful.
 
 ```
+
 const person = {
-  firstName: "John",
-  lastName: "Doe",
-  age: 30,
-  address: {
-    city: "Example City",
-    country: "Example Country",
-  },
+firstName: "John",
+lastName: "Doe",
+age: 30,
+address: {
+city: "Example City",
+country: "Example Country",
+},
 };
 
 const { firstName, lastName, age, address: { city, country } } = person;
@@ -313,6 +383,7 @@ console.log("Last Name:", lastName);
 console.log("Age:", age);
 console.log("City:", city);
 console.log("Country:", country);
+
 ```
 
 ### Spread Operator
@@ -322,24 +393,28 @@ The spread operator in JS looks like `...`
 This can be used on both arrays and objects in order to create a new object or array, but add some new values. Remember, arrays are immutable, so you usually just create a new one. Here's an example.
 
 ```
+
 const numbers = [1, 2, 3];
 const newNumbers = [...numbers, 4, 5];
 // newNumbers is [1,2,3,4,5]
+
 ```
 
 It essentially _spreads_ the array into the new array, but also adds the new things you put in it. This also works for objects.
 
 ```
+
 const person = {
-  firstName: "John",
-  lastName: "Doe",
+firstName: "John",
+lastName: "Doe",
 };
 const newPerson = {...person, age: 40}
 newPerson is {
-  firstName: "John",
-  lastName: "Doe",
-  age: 40
+firstName: "John",
+lastName: "Doe",
+age: 40
 }
+
 ```
 
 ## Asynchronous functions, async/await, Promises, .then()
@@ -353,14 +428,16 @@ Here's an example of the async/await syntax. Functions are declared as `async` f
 As fetching data from a database takes some time, that function must be awaited.
 
 ```
+
 const fetchDataAsync = async () => {
-  try {
-    const data = await fetchDataFromDatabase(); //this is asynchronous, takes time
-    console.log("Data fetched:", data);
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
+try {
+const data = await fetchDataFromDatabase(); //this is asynchronous, takes time
+console.log("Data fetched:", data);
+} catch (error) {
+console.error("Error fetching data:", error);
 }
+}
+
 ```
 
 ---
@@ -374,18 +451,21 @@ Promises can be pending (not yet completed), fullfilled (worked fine), or reject
 Here's a basic example of a promise.
 
 ```
+
 const myPromise = new Promise((resolve, reject) => {
-  // Asynchronous operation (e.g., fetching data, reading a file)
-  setTimeout(() => {
-    const success = true;
+// Asynchronous operation (e.g., fetching data, reading a file)
+setTimeout(() => {
+const success = true;
 
     if (success) {
       resolve("Operation successful!"); // Fulfill the promise with a value
     } else {
       reject("Operation failed!"); // Reject the promise with a reason
     }
-  }, 1000);
+
+}, 1000);
 });
+
 ```
 
 Once we have the promise, here's how you can work with it.
@@ -393,25 +473,29 @@ Once we have the promise, here's how you can work with it.
 The `.then()` is executed if the promise is fulfilled, and `.catch()` executes when the promise is rejected.
 
 ```
+
 myPromise
-  .then((result) => {
-    console.log("Fulfilled:", result);
-  })
-  .catch((error) => {
-    console.error("Rejected:", error);
-  });
+.then((result) => {
+console.log("Fulfilled:", result);
+})
+.catch((error) => {
+console.error("Rejected:", error);
+});
+
 ```
 
 async functions can return promises. Here's an example which ties together most of the stuff in this lesson.
 
 ```
-  const getNotifications = async ({ req }) => {
-    const data = await Notification.find({
-      where: { creatorId: req.session.userId },
-      order: { id: "DESC" },
-    });
-    return data;
-  }
+
+const getNotifications = async ({ req }) => {
+const data = await Notification.find({
+where: { creatorId: req.session.userId },
+order: { id: "DESC" },
+});
+return data;
+}
+
 ```
 
 This function returns a promise, either containing an array of notifications, or it is undefined. TypeScript will help with this later.
@@ -425,3 +509,7 @@ The `.find()` function takes an object, which has a key `where` with the value b
 It then returns data, which came in an async function, so it is returned as a promise.
 
 This is production code which queries a database, using a userId, and gets their notifications for them.
+
+```
+
+```
