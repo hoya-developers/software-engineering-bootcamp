@@ -85,6 +85,6 @@ To run, type the following command in the root of your terminal.
 
 There are lots of external component libraries which you may want to use in the future - we'll touch on some of them later in the course, but when you're creating a fresh application. It's much easier to create a project using their command line create project command, rather than add dependencies later.
 
-## Components
+## React Basics
 
-Let's take a look at how to create a very basic react app with some components.
+[Here's a link to a repository where I'll be hosting most of the React we write.](https://github.com/colingraydon/bootcamp-react-example)
