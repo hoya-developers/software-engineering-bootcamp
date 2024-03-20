@@ -1,0 +1,25 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.item {
+  background-color: lightblue;
+  padding: 10px;
+  margin: 10px;
+}
+.item-2 {
+  background-color: lightgreen;
+  padding: 10px;
+  margin: 10px;
+}
+.inner-container {
+  background-color: lightcoral;
+  display: flexz-;
+}
+.container {
+  background-color: lavender;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-end;
+}

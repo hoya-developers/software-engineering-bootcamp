@@ -2,6 +2,8 @@
 
 #### [Class Slides](https://docs.google.com/presentation/d/1rTd0wjK8StV_5h60NiFQkkzvBoQ7m6asS5jQnflITng/edit?usp=sharing)
 
+#### [Class Lecture](https://www.youtube.com/watch?v=CHhlXkmyYuk&t=2097s&ab_channel=HoyaDevelopers)
+
 ### Figma Setup
 
 #### What is Figma?
