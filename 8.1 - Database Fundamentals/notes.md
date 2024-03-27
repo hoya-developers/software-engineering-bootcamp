@@ -1,5 +1,7 @@
 ## Database
 
+To see an example of all of this in action, with a PostGreSQL database, check out the [express-test](https://github.com/colingraydon/express-test) repo. The `typeorm-controllers` branch has all of the code we're going to be talking about. It should also be on main now.
+
 ### Introduction
 
 Databases are typically categorized as SQL or NoSQL.
